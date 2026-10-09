@@ -1,8 +1,7 @@
 <script>
-  import StudentInfoCard from './lib/StudentInfoCard.svelte';
+  import StudentInfoList from "./lib/StudentInfoList.svelte";
 </script>
 
 <main>
-  <StudentInfoCard/>
-
+  <StudentInfoList />
 </main>
