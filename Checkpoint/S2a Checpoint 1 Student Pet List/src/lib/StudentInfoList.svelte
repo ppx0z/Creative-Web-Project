@@ -5,6 +5,8 @@
         addStudent,
     } from "./shared/StudentData.svelte.js";
 
+    import StudentCard from "./StudentCard.svelte";
+
     function handleSubmit(e) {
         e.preventDefault();
         addStudent();
@@ -25,15 +27,7 @@
     <h1>Student List</h1>
     <ul>
         {#each studentData.students as student}
-            <li>
-                Student Name: {student.studentName}
-
-                {#if student.petName}
-                    Pet Type: {student.petType} - Pet Name: {student.petName}
-                {:else}
-                    No pet yet.
-                {/if}
-            </li>
+           <StudentCard {student}/>
         {/each}
     </ul>
 </div>
