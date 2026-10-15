@@ -14,7 +14,7 @@
 </script>
 
 <div class="input-data">
-    <h1>Add New Student</h1>
+    <h1>Register a Student.</h1>
     <form onsubmit={handleSubmit}>
         Student Name: <input bind:value={newStudent.studentName} />
         Pet Type: <input bind:value={newStudent.petType} />

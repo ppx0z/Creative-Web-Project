@@ -4,12 +4,14 @@
 
 </script>
 
-<li>
-                Student Name: {student.studentName}
-
+<ul>
                 {#if student.petName}
-                    Pet Type: {student.petType} - Pet Name: {student.petName}
+                    <li>
+                   Student Name: {student.studentName} | Pet Type: {student.petType} | Pet Name: {student.petName}
+                    </li>
                 {:else}
-                    No pet yet.
+                    <li> 
+                        Student Name: {student.studentName} | No pet yet.
+                    </li>
                 {/if}
-</li>
+</ul>
