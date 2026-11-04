@@ -16,6 +16,7 @@
   "dependencies": {
     "@threlte/core": "^8.7.0",
     "@threlte/extras": "^9.23.1",
+    "@threlte/rapier": "^3.5.1",
     "three": "^0.187.0"
   }
 }
