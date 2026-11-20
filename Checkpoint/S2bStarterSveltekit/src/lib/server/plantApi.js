@@ -1,5 +1,6 @@
 import { PLANTSWAP_API_URL } from '$app/env/private';
 
+
 //GETS every plant
 export async function fetchPlants() {
 	// await means: pause here until Express answers, then carry on.

@@ -14,7 +14,7 @@
 import 'dotenv/config'; // reads the .env file into process.env
 import express from 'express';
 import mongoose from 'mongoose';
-import * as sketchData from './lib/sketchData.js';
+import * as plantData from './lib/plantData.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -24,58 +24,56 @@ app.use(express.json());
 
 // A request logger, handy when two servers are running side by side.
 app.use((req, res, next) => {
-	console.log(`[sketch-api] ${req.method} ${req.path}`);
+	console.log(`[plant-api] ${req.method} ${req.path}`);
 	next();
 });
 
-// --- GET /api/sketches — list every sketch ---------------------------------
-app.get('/api/sketches', async (req, res) => {
+// --- GET /api/plants— list every plant---------------------------------
+app.get('/api/plants', async (req, res) => {
 	try {
 		// await means: pause here until the database answers, then carry on.
-		const sketches = await sketchData.getAll();
-		res.json(sketches);
+		const plant = await plantData.getAll();
+		res.json(plant);
 	} catch (err) {
-		console.error('Failed to read sketches:', err.message);
-		res.status(500).json({ error: 'Could not read sketches' });
+		console.error('Failed to read plants:', err.message);
+		res.status(500).json({ error: 'Could not read plants' });
 	}
 });
 
-// --- POST /api/sketches — add a new sketch ----------------------------------
-app.post('/api/sketches', async (req, res) => {
+// --- POST /api/plants — add a new plant ----------------------------------
+app.post('/api/plants', async (req, res) => {
 	try {
 		// With no Content-Type header, req.body is undefined, so check first.
 		if (!req.body) {
-			return res.status(400).json({ error: 'title, artist and colorTag are all required' });
+			return res.status(400).json({ error: 'name, species, swapped, and light requirements are all required' });
 		}
 
-		const { title, artist, colorTag } = req.body;
+		const { name, species, swapped, needsLight } = req.body;
 
 		// 400 = Bad Request: the caller left out something we need.
-		if (!title || !artist || !colorTag) {
-			return res.status(400).json({ error: 'title, artist and colorTag are all required' });
+		if (!name || !species || typeof swapped !== 'boolean' || !needsLight) {
+			return res.status(400).json({ error: 'name, species, swapped, and light requirements are all required' });
 		}
 
-		const newSketch = await sketchData.create({ title, artist, colorTag });
+		const newPlant = await plantData.create({ name, species, swapped, needsLight });
 
 		// 201 = Created: it worked AND a new sketch now exists.
-		res.status(201).json(newSketch);
+		res.status(201).json(newPlant);
 	} catch (err) {
-		console.error('Failed to create sketch:', err.message);
-		res.status(500).json({ error: 'Could not create sketch' });
+		console.error('Failed to create plant:', err.message);
+		res.status(500).json({ error: 'Could not create plant' });
 	}
 });
 
-// --- PATCH /api/sketches/:id — change some fields of one sketch --------------
-// The URL says WHICH sketch (:id). The JSON body says WHAT to change,
-// e.g. { "favourite": true }.
-app.patch('/api/sketches/:id', async (req, res) => {
+
+app.patch('/api/plants/:id', async (req, res) => {
 	try {
 		if (!req.body) {
 			return res.status(400).json({ error: 'a JSON body of changes is required' });
 		}
 
 		// The id stays as text: MongoDB ids are text, so there is no Number() here.
-		const updated = await sketchData.update(req.params.id, req.body);
+		const updated = await plantData.update(req.params.id, req.body);
 
 		// 404 = Not Found: the request was fine, but no sketch has this id.
 		if (!updated) {
@@ -90,9 +88,9 @@ app.patch('/api/sketches/:id', async (req, res) => {
 });
 
 // --- DELETE /api/sketches/:id — remove one sketch ----------------------------
-app.delete('/api/sketches/:id', async (req, res) => {
+app.delete('/api/plants/:id', async (req, res) => {
 	try {
-		const removed = await sketchData.remove(req.params.id);
+		const removed = await plantData.remove(req.params.id);
 
 		if (!removed) {
 			return res.status(404).json({ error: `No sketch found with id ${req.params.id}` });
