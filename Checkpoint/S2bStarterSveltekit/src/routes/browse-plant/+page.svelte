@@ -21,7 +21,7 @@
 				throw new Error(`Request failed with status ${res.status}`);
 			}
 
-			plants = plants.filter((p) => p.id !== plant.id);
+			await invalidateAll();
 		} catch (err) {
 			listError = "Could not delete that plant. Is the API running?";
 			console.error(err);
@@ -47,7 +47,7 @@
 					<p>
 						Availability: 
 						<span> 
-							{plant.swapped ? "Unavailable" : "Avaialble"}
+							{plant.swapped ? "Unavailable" : "Available"}
 						</span>
 					</p>
 				</div>
