@@ -28,12 +28,17 @@ app.use((req, res, next) => {
 	next();
 });
 
-// --- GET /api/plants— list every plant---------------------------------
+// --- GET /api/plants— list plant selected by the light filer, if no filter is selected then all plants are returned---------------------------------
 app.get('/api/plants', async (req, res) => {
 	try {
+
+		const light = req.query.light;
+		 
 		// await means: pause here until the database answers, then carry on.
-		const plant = await plantData.getAll();
+		const plant = await plantData.getAll(light);
+
 		res.json(plant);
+
 	} catch (err) {
 		console.error('Failed to read plants:', err.message);
 		res.status(500).json({ error: 'Could not read plants' });

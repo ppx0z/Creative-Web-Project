@@ -3,8 +3,14 @@
 
 import Plant from '../models/Plant.js';
 
-// READ — every plant in the collection.
-export async function getAll() {
+// READ — filter select and diplays in on the page.
+//e.g. - if 'low' is selected then it returns the plants with low lights 
+//if no filter is selected then all plants are returned
+export async function getAll(light) {
+    
+    if(light) {
+        return Plant.find({ needsLight: light});
+    }
     return Plant.find();
 }
 

@@ -2,9 +2,11 @@ import { PLANTSWAP_API_URL } from '$app/env/private';
 
 
 //GETS every plant
-export async function fetchPlants() {
+export async function fetchPlants(light) {
 	// await means: pause here until Express answers, then carry on.
-	const res = await fetch(`${PLANTSWAP_API_URL}/api/plants`);
+	const query = light ? `?light=${encodeURIComponent(light)}` : '';
+
+	const res = await fetch(`${PLANTSWAP_API_URL}/api/plants${query}`);
 
 	if (!res.ok) {
 		throw new Error(`PlantSwap API responded with ${res.status}`);

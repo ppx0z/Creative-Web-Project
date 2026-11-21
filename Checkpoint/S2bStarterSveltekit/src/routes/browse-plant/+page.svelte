@@ -1,13 +1,12 @@
 <script>
-    import { invalidateAll } from '$app/navigation';
+	import { invalidateAll } from "$app/navigation";
 
 	let listError = $state("");
 
 	let { data } = $props();
 
-	// Our own copy of the list, seeded from load()'s data, so the page can
-	let  plants = $state(data.plants ?? []);
-
+	// keeps the plant list updated with the latest data returned by load()
+	let plants = $derived(data.plants ?? []);
 
 	// DELETE — the ✕ button. A successful delete answers 204 (No Content),
 	async function deletePlant(plant) {
@@ -30,10 +29,14 @@
 	}
 </script>
 
-<nav>
-	
-</nav>
 <main>
+	<section class="filter">
+		<a href="/browse-plant">All</a>
+		<a href="/browse-plant?light=low">Low</a>
+		<a href="/browse-plant?light=medium">Medium</a>
+		<a href="/browse-plant?light=bright">Bright</a>
+	</section>
+
 	<ul class="plant-shelf">
 		{#each plants as plant (plant.id)}
 			<li class="sketch-card" style="border-left-color:">
@@ -42,7 +45,7 @@
 					<span class="species"> Species {plant.species}</span>
 					<span class="swapped"> Swapped? {plant.swapped}</span>
 					<span class="light-needed">
-						Light Requirements {plant.lightNeeded}</span
+						Light Requirements {plant.needsLight}</span
 					>
 				</div>
 				<div class="buttons">

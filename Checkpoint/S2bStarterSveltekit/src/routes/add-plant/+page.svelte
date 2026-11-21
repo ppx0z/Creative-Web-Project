@@ -11,7 +11,7 @@
     let submitError = $state("");
     let listError = $state("");
 
-   let plants = $state([data.plants]);
+    let plants = $state([data.plants]);
 
     // ADD — the form.
     // SvelteKit forwards it to Express.
@@ -49,11 +49,6 @@
     }
 </script>
 
-<nav>
-    <a href="/"> Home</a>
-    <a href="/add-plant"> Add Plant</a>
-    <a href="/browse-plant"> Browse Plant</a>
-</nav>
 <main>
     <h2>Add a sketch</h2>
     <form onsubmit={handleSubmit}>
