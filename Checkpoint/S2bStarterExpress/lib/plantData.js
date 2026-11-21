@@ -14,6 +14,11 @@ export async function getAll(light) {
     return Plant.find();
 }
 
+//READ ONE - find a single plant using its MongoDB id
+export async function getOne(id){
+    return Plant.findById(id);
+}
+
 // CREATE — save a new plant. `data` holds title, artist and colorTag.
 // Gives back the saved plant.
 export async function create(data) {

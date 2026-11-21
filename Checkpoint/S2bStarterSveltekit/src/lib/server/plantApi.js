@@ -1,5 +1,20 @@
 import { PLANTSWAP_API_URL } from '$app/env/private';
 
+//GETS a specific plant using its ID
+export async function getPlant(id){
+	const res = await fetch(`${PLANTSWAP_API_URL}/api/plants/${id}`);
+
+	// If Express cannot find the plant, return null
+    if (res.status === 404) {
+        return null;
+    }
+
+    if (!res.ok) {
+        throw new Error(`PlantSwap API responded with ${res.status}`);
+    }
+
+    return res.json();
+}
 
 //GETS every plant
 export async function fetchPlants(light) {

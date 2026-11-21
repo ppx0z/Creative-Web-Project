@@ -3,7 +3,7 @@
 //also handles removing the plants
 
 import { json } from '@sveltejs/kit';
-import { updatePlant, deletePlant } from '#lib/server/plantApi.js';
+import { getPlant, updatePlant, deletePlant } from '#lib/server/plantApi.js';
 
 //PATCH --> update specific field
 export async function PATCH({ params, request }) {
@@ -44,5 +44,28 @@ export async function DELETE({ params }) {
     } catch (err) {
         console.error('Failed to delete plant via Express:', err.message);
         return json({ error: 'Could not reach the Plant API' }, { status: 502 });
+    }
+}
+
+export async function GET({ params }) {
+    try {
+        const plant = await getPlant(params.id);
+
+        if (!plant) {
+            return json(
+                { error: `No plant found with id ${params.id}` },
+                { status: 404 }
+            );
+        }
+
+        return json(plant);
+
+    } catch (err) {
+        console.error('Failed to get plant:', err.message);
+
+        return json(
+            { error: 'Could not reach the Plant API' },
+            { status: 502 }
+        );
     }
 }

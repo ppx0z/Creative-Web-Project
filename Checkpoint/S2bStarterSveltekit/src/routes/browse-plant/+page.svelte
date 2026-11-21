@@ -39,14 +39,17 @@
 
 	<ul class="plant-shelf">
 		{#each plants as plant (plant.id)}
-			<li class="sketch-card" style="border-left-color:">
+			<li class="plant-card">
 				<div>
-					<strong>{plant.name}</strong>
-					<span class="species"> Species {plant.species}</span>
-					<span class="swapped"> Swapped? {plant.swapped}</span>
-					<span class="light-needed">
-						Light Requirements {plant.needsLight}</span
-					>
+					<a href={`/browse-plant/${plant.id}`}>
+						<h3>{plant.name}</h3>
+					</a>
+					<p>
+						Availability: 
+						<span> 
+							{plant.swapped ? "Unavailable" : "Avaialble"}
+						</span>
+					</p>
 				</div>
 				<div class="buttons">
 					<button

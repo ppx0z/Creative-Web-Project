@@ -45,6 +45,28 @@ app.get('/api/plants', async (req, res) => {
 	}
 });
 
+// --- GET /api/plants/:id— list one plant by its MongoDB id---------------------------------
+app.get('/api/plants/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(404).json({ error: 'Plant not found' });
+    }
+
+    const plant = await plantData.getOne(id);
+
+    if (!plant) {
+      return res.status(404).json({ error: 'Plant not found' });
+    }
+
+    res.json(plant);
+  } catch (err) {
+    console.error('Failed to read plant:', err.message);
+    res.status(500).json({ error: 'Could not read plant' });
+  }
+});
+
 // --- POST /api/plants — add a new plant ----------------------------------
 app.post('/api/plants', async (req, res) => {
 	try {
