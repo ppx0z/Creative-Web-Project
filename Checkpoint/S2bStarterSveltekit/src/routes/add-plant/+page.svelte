@@ -6,13 +6,12 @@
     let name = $state("");
     let species = $state("");
     let swapped = $state(false);
-    let needsLight = $state('');
-    let submitting = $state("");
+    let needsLight = $state("");
+    let submitting = $state(false);
     let submitError = $state("");
     let listError = $state("");
 
-    // Own copy of the list
-    let plants = $state(data.plants);
+   let plants = $state([data.plants]);
 
     // ADD — the form.
     // SvelteKit forwards it to Express.
@@ -33,14 +32,14 @@
                 throw new Error(`Request failed with status ${res.status}`);
             }
 
-            // The API sends back the saved sketch (with its id). Add it to our list.
+            // The API sends back the saved plant (with its id). Add it to our list.
             const newPlant = await res.json();
             plants.push(newPlant);
 
             name = "";
             species = "";
             swapped = false;
-            needsLight = '';
+            needsLight = "";
         } catch (err) {
             submitError = "Could not add that plant. Is the API running?";
             console.error(err);
