@@ -63,3 +63,86 @@
 		{/each}
 	</ul>
 </main>
+<style>
+
+	a {
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: #6B9877;
+	}
+	.plant-shelf {
+		display: grid;
+		list-style: none;
+		grid-template-columns: repeat(auto-fit, minmax(15.6rem, 1fr));
+		gap: 1.25rem;
+		max-width: 56rem;
+		margin: 1.8rem auto;
+	}
+
+	.plant-card {
+		 background: #ffffff;
+    padding: 1.375rem;
+    border-radius: 0.875rem;
+    border: 1.5px solid #dce6d8;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+	}
+
+	.plant-card:hover {
+	transform: translateY(-0.25rem);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.09)
+	}
+
+	.plant-card h3 {
+    color: #294b32;
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem;
+	font-family: system-ui, sans-serif;
+	}
+
+	.plant-card h3:hover {
+		  color: #6B9877;
+	}
+
+.plant-card p {
+    color: #657565;
+    font-size: 0.875rem;
+    margin: 0.5rem 0;
+	font-family: system-ui, sans-serif;
+
+}
+
+
+.plant-card button {
+    background: #f7eeee;
+    color: #a34e4e;
+    border: none;
+    border-radius: 0.4375rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+}
+
+.plant-card button:hover {
+    background: #f0dada;
+}
+
+.filter {
+    text-align: center;
+    margin: 1.5625rem 0;
+}
+
+.filter a {
+    color: #47764b;
+    text-decoration: none;
+    margin: 0 0.625rem;
+    font-weight: 600;
+    font-family: system-ui, sans-serif;
+}
+
+.filter a:hover {
+    text-decoration: none;
+}
+
+</style>

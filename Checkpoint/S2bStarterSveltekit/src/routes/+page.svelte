@@ -2,7 +2,6 @@
 <main>
 	<h1>Plant Swap</h1>
 	<p>Submit your plant to be swapped!!</p>
-	<p><a href="/gallery">→ View the Sketch Gallery</a></p>
 </main>
 
 <style>

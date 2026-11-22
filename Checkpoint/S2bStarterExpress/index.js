@@ -1,13 +1,13 @@
 /**
- * index.js — the Sketch Gallery API (Express).
+ * index.js — the plant Gallery API (Express).
  * ------------------------------------------------------------------
  * This is a separate program from the SvelteKit app, with its own
  * package.json, its own port and its own .env.
  *
  * It connects to MongoDB Atlas, then answers four routes. Each route
- * checks the request, calls ONE function from ./lib/sketchData.js, and
+ * checks the request, calls ONE function from ./lib/plantData.js, and
  * sends back the result with a status code. The database work lives in
- * sketchData.js, not here.
+ * plantData.js, not here.
  * ------------------------------------------------------------------
  */
 
@@ -84,7 +84,7 @@ app.post('/api/plants', async (req, res) => {
 
 		const newPlant = await plantData.create({ name, species, swapped, needsLight });
 
-		// 201 = Created: it worked AND a new sketch now exists.
+		// 201 = Created: it worked AND a new plant now exists.
 		res.status(201).json(newPlant);
 	} catch (err) {
 		console.error('Failed to create plant:', err.message);
@@ -102,39 +102,39 @@ app.patch('/api/plants/:id', async (req, res) => {
 		// The id stays as text: MongoDB ids are text, so there is no Number() here.
 		const updated = await plantData.update(req.params.id, req.body);
 
-		// 404 = Not Found: the request was fine, but no sketch has this id.
+		// 404 = Not Found: the request was fine, but no plant has this id.
 		if (!updated) {
-			return res.status(404).json({ error: `No sketch found with id ${req.params.id}` });
+			return res.status(404).json({ error: `No plant found with id ${req.params.id}` });
 		}
 
 		res.json(updated);
 	} catch (err) {
-		console.error('Failed to update sketch:', err.message);
-		res.status(500).json({ error: 'Could not update sketch' });
+		console.error('Failed to update plant:', err.message);
+		res.status(500).json({ error: 'Could not update plant' });
 	}
 });
 
-// --- DELETE /api/sketches/:id — remove one sketch ----------------------------
+// --- DELETE /api/plant/:id — remove one plant ----------------------------
 app.delete('/api/plants/:id', async (req, res) => {
 	try {
 		const removed = await plantData.remove(req.params.id);
 
 		if (!removed) {
-			return res.status(404).json({ error: `No sketch found with id ${req.params.id}` });
+			return res.status(404).json({ error: `No plant found with id ${req.params.id}` });
 		}
 
 		// 204 = No Content: it worked, and there is nothing left to send back.
 		res.status(204).send();
 	} catch (err) {
-		console.error('Failed to delete sketch:', err.message);
-		res.status(500).json({ error: 'Could not delete sketch' });
+		console.error('Failed to delete plant:', err.message);
+		res.status(500).json({ error: 'Could not delete plant' });
 	}
 });
 
 // --- Connect to MongoDB, then start listening --------------------------------
 // The connection string (MONGODB_URI) comes from .env. The database name is
 // part of that string. The collection comes from the model's name (see
-// models/Sketch.js).
+// models/plant.js).
 async function start() {
 	try {
 		// await means: pause here until Atlas answers, then carry on.
@@ -146,7 +146,7 @@ async function start() {
 	}
 
 	app.listen(PORT, () => {
-		console.log(`Sketch Gallery API listening on http://localhost:${PORT}`);
+		console.log(`plant Gallery API listening on http://localhost:${PORT}`);
 	});
 }
 
